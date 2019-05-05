@@ -3,31 +3,23 @@
  */
 
 #include <stdio.h>
+#define OUT 0
+#define IN 1
 
-#define INWORD 0
-#define OUTWORD 1
-
-/* Counts lines, words and characters in stdin */
 int main(){
-  int c, state;
-
-  state = OUTWORD;
-
-  while ( (c = getchar()) != EOF ){
-    switch(c){
-      case '\n':
-      case ' ':
-      case '\t':
-        state = OUTWORD;
-        break;
-      default:
-        if(state == OUTWORD){
-          putchar('\n');
+    int c, state = OUT, nw = 0;
+    while((c = getchar())!=EOF){
+        if(c == ' '||c == '\n'||c == '\t'){
+            state = OUT;
+            putchar('\n');
         }
-        state = INWORD;
-        putchar(c);
+        else if(state == OUT){
+            putchar(c);
+            ++nw;
+            state = IN;
+        }
+        else{
+            putchar(c);
+        }
     }
-  }
-  putchar('\n');
-  return 0;
 }
